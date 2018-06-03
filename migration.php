@@ -102,6 +102,15 @@ include_once('./lib/connect.php');
         # Тут пишете код, который нужно выполнить.
         # Пример:
         echo 'Кнопка нажата!';
+		$results = $mysqli->query("SELECT account_id, FROM account where type = 2");
+
+print '<table border="1">';
+while($row = $results->fetch_assoc()) {
+    print '<tr>';
+    print '<td>'.$row["account_id"].'</td>';
+    print '</tr>';
+}
+print '</table>';
     }
 ?>
 
