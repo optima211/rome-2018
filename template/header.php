@@ -31,15 +31,15 @@
                                 <a href="#"><h4>по адресу</h4></a>
                             </li>
                             <li>
-                                <a href="#"><h4>из базы</h4></a>
+                                <a href="select_bd.php"><h4>из базы</h4></a>
                             </li>
                         </ul>
                     </li>
                     <li>
-                        <a href="#"><h4>добавить</h4></a>
+                        <a href="add.php"><h4>добавить</h4></a>
                     </li>
                    <li>
-                        <a href="#"><h4>изменить</h4></a>
+                        <a href="update.php"><h4>изменить</h4></a>
                     </li>
                     <li>
                         <a href="migration.php"><h4>миграция</h4></a>

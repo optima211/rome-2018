@@ -30,7 +30,7 @@
                              <p>Официальный сайт</p></a>
                     </li>
                     <li class="dropdown">
-                        <a href="" class="dropdown-toggle" data-toggle="dropdown">просмотр<b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">просмотр<b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="map.php">по коорднитам</a>
@@ -39,7 +39,7 @@
                                 <a href="#">по адресу</a>
                             </li>
                             <li>
-                                <a href="#">из базы</a>
+                                <a href="select_bd.php">из базы</a>
                             </li>
                         </ul>
                     </li>
@@ -49,13 +49,13 @@
             <div class="col-lg-3 col-sm-3 col-xs-7">
                 <ul>
                     <li>
-                        <a href="#">
+                        <a href="add.php">
                            <p>Добавить</p>
                         </a>
                     </li>
                    
                      <li>
-                        <a href="#"><p>Изменить</p></a>
+                        <a href="update.php"><p>Изменить</p></a>
                     </li>
                             
                     <li>

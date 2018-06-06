@@ -1,6 +1,3 @@
-<?
-error_reporting(-1);
-?>
 <!DOCTYPE html>
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
@@ -53,7 +50,7 @@ error_reporting(-1);
 
 include_once('./lib/connect.php');
 
-// можно, как шаблон взять эту страницу
+
 
 ?>
 
@@ -76,7 +73,7 @@ include_once('./lib/connect.php');
       <div class="col-lg-11 col-lg-offset-1"> 
    
 <ul class="breadcrumb"><li><a href="#">Главная</a></li>
-<li class="active">миграция</li></ul>
+<li class="active">заголовок 1</li></ul>
 </div>
 </div>
 </div>
@@ -85,48 +82,54 @@ include_once('./lib/connect.php');
  <div class="ms2_product">
     <div class="col-lg-12"> 
      
-<h2 class="upper">миграция адресов точек учета</h2>
+<h2 class="upper">заголовок 2</h2>
 
 
-<form class="contact_form" action="migration.php" method="post" name="contact_form">
-    <ul>
-        <li>
-             <h2>Поиск ошибочных записей</h2>
-        </li>
-        <li>
-        	<button class="submit" type="submit" name="search">Найти ошибочные записи</button>
-        </li>
-    </ul>
-</form>
-<?php
-    # Если кнопка нажата
-    if( isset( $_POST['search'] ) )
-    {
-        # Тут пишете код, который нужно выполнить.
-        # Пример:
-        echo 'Кнопка нажата!';
-		$results = $mysqli->query("SELECT account_id FROM account where type = 1");
-echo '<table border="1">';
-while($row = $results->fetch_assoc()) {
-    echo '<tr>';
-    echo '<td>'.$row["account_id"].'</td>';
-    echo '</tr>';
-}
-echo '</table>';
-// Frees the memory associated with a result
-$results->free();
 
-// close connection
-$mysqli->close();
-    }
-?>
+
 
 
 	 <br>
 	 <hr>
 	 <br>
 	 
- 
+<form class="contact_form" action="map.php" method="post" name="contact_form">
+    <ul>
+        <li>
+             <h2>мес1</h2>
+             <span class="required_notification">Все поля обязательны к заполнению</span>
+        </li>
+        <li>
+            <label for="lat">мес2:</label>
+            <input name="lat" type="number" step="any"  placeholder="0000" required />
+			<span class="form_hint">плитка</span>
+        </li>
+        <li>
+            <label for="lng">мес3:</label>
+            <input name="lng" type="number" step="any"  placeholder="0000" required />
+            <span class="form_hint">плитка</span>
+        </li>
+        <li>
+            <label for="zoom">мес4:</label>
+            <input type="number" min="1" name="zoom" placeholder="000000" required pattern="00000"/>
+            <span class="form_hint"> плитка</span>
+        </li>
+        <li>
+        	<button class="submit" type="submit" name="map">кнопка</button>
+        </li>
+    </ul>
+</form>
+
+</br>
+	 
+	 
+	 
+
+	 
+	 
+	 
+	 
+	 
 	 
 
 <div class="pagin 897061acae4878988cdc752665e07dfede081a1e" id="pagin"><div class="pagination"><ul class="pagination"><li class="control"><a href="#" data-pagin="page" id="next">»</a></li></ul></div></div>

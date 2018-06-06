@@ -8,9 +8,9 @@
 
 
 
- $mysqli = "SELECT * FROM account WHERE type = 4 LIMIT 5"; // LIMIT 5 значит что он переведет только 4 записи, это сделано потому что база большая и на опенсервере сайт зависает.
+ // LIMIT 5 значит что он переведет только 4 записи, это сделано потому что база большая и на опенсервере сайт зависает.
  // Чтобы перевести всю базу надо убрать LIMIT 5
-$result = $mysqli->query($mysqli);
+$result = $mysqli->query("SELECT * FROM account WHERE type = 4 LIMIT 5");
 
  $actor = $result->fetch_assoc();
 
@@ -37,7 +37,7 @@ $result = $mysqli->query($mysqli);
   $mapData = map_google_search_result($geoData); //прием координат
 
   $query = "INSERT INTO account_coordinates VALUES ('".$actor['account_id']."', '".$mapData['lat']."', '".$mapData['lng']."')";
-$mysqli->query($query);
+$mysqli->query($query);	
  }
  echo "</ul>\n";
 
