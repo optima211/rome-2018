@@ -18,6 +18,7 @@
     <!-- Custom CSS -->
     <link href="./css/modern-business.css" rel="stylesheet">
 	<link href="./css/input.css" rel="stylesheet" type="text/css">
+	<link href="./css/table.css" rel="stylesheet" type="text/css">
 
     <!-- Custom Fonts -->
     <link href="./css/font-awesome.min.css" rel="stylesheet" type="text/css">

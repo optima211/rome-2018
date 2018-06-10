@@ -1,0 +1,49 @@
+ <link href="../css/google.css" rel="stylesheet" type="text/css">
+ <div id="map"></div>
+    <script>
+      function initMap() {
+        var uluru = {lat: <? echo $lat; ?>, lng: <? echo $lng; ?>};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: <? echo $zoom; ?>,
+          center: uluru
+        });
+        var marker = new google.maps.Marker({
+          position: uluru,
+          map: map
+        });
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=<? echo $key; ?>&callback=initMap">
+    </script>	 
+//migrat image
+	
+while($t = $mysqli->query("SELECT * FROM geopoint WHERE a = 0")->fetch_assoc()){
+$mysqli->query("UPDATE geopoint SET a = 1 WHERE account_id = ".$t['account_id']);
+$src = 'https://maps.googleapis.com/maps/api/staticmap?center='.$t['lat'].','.$t['lng'].'&markers=color:red%7Clabel:C%7C'.$t['lat'].','.$t['lng'].'&zoom=16&size=600x400&key='.$googleKey.'';
+file_put_contents('graphics/'.$t['account_id'].'.png',file_get_contents($src));
+}
+
+
+
+
+
+while($t = $mysqli->query("SELECT * FROM geopoint WHERE a = 1")->fetch_assoc()){
+$mysqli->query("UPDATE geopoint SET a = 0 WHERE account_id = ".$t['account_id']);
+$query = "INSERT INTO graphic VALUES (NULL,'".$actor['account_id'].".png', NULL, '".$mapData['lat']."', '".$mapData['lng']."')";
+$src = 'https://maps.googleapis.com/maps/api/staticmap?center='.$t['lat'].','.$t['lng'].'&markers=color:red%7Clabel:C%7C'.$t['lat'].','.$t['lng'].'&zoom=16&size=600x400&key='.$googleKey.'';
+file_put_contents('graphics/'.$t['account_id'].'.png',file_get_contents($src));
+}
+
+
+
+
+//set map api url
+$url = "https://maps.google.com/maps/api/geocode/json?address=$address&key=".$googleKey;
+echo "<a href='$url'>asdas</a>";
+//call api
+$json = file_get_contents($url);
+$json = json_decode($json);
+$lat = $json->results[0]->geometry->viewport->northeast->lat;
+$lng = $json->results[0]->geometry->viewport->northeast->lng;
+echo "Latitude: " . $lat . ", Longitude: " . $lng;

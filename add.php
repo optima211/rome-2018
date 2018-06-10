@@ -85,7 +85,7 @@ $types = array(
       <div class="col-lg-11 col-lg-offset-1"> 
    
 <ul class="breadcrumb"><li><a href="#">Главная</a></li>
-<li class="active">заголовок 1</li></ul>
+<li class="active">Добавление</li></ul>
 </div>
 </div>
 </div>
@@ -94,7 +94,7 @@ $types = array(
  <div class="ms2_product">
     <div class="col-lg-12"> 
      
-<h2 class="upper">заголовок 2</h2>
+<h2 class="upper">Добавление информации в базу</h2>
 
 
 
@@ -138,6 +138,7 @@ switch ($action)	{
 		echo '<ul>
         <li>
              <h2>Добавление страны</h2>
+             <span class="required_notification">* Обязательное поле</span>
 			 
         </li>';
 		echo '<li>
@@ -167,6 +168,7 @@ switch ($action)	{
 		echo '<ul>
         <li>
              <h2>Добавление города</h2>
+             <span class="required_notification">* Обязательное поле</span>
 			 
         </li>';
 		echo '<li><label for="country">Страна</label>
@@ -198,7 +200,7 @@ switch ($action)	{
 	case 3;
 	echo '<a href="add.php"><< Назад</a>';
 	if(isset($_POST['name']) && isset($_POST['owner']) && isset($_POST['save'])){
-		$query = "INSERT INTO account VALUE(NULL,3,'".$_POST['name']."','".$_POST['country']."','".$_POST['comment']."','".$_POST['owner']."',0)";
+		$query = "INSERT INTO account VALUE(NULL,3,'".$_POST['name']."','".$_POST['city']."','".$_POST['comment']."','".$_POST['owner']."',0)";
 		if($mysqli->query($query)){echo '<font color="green"><center>Улица <b>'.$_POST['name'].'</b> успешно добавлена.</center></font><br />'; }
 		else echo '<font color="red"><center>Ошибка при добавлении улицы <b>'.$_POST['name'].'</b>.</center></font><br />';
 	}
@@ -206,15 +208,17 @@ switch ($action)	{
 		echo '<ul>
         <li>
              <h2>Добавление улицы</h2>
-			 
+             <span class="required_notification">* Обязательное поле</span>
         </li>';
-		echo '<li><label for="country">Город</label>
-<select name="country">';
-		$cities = $mysqli->query("SELECT * FROM account where type = 2");
+		echo '<li><label for="country">Страна</label>
+<select onchange="javascript:getCities();" id="country" name="country">';
+		echo '<option value="0">Не выбрано</option>';
+		$cities = $mysqli->query("SELECT * FROM account where type = 1");
 		while($parent = $cities->fetch_assoc()){
 			echo '<option value="'.$parent['account_id'].'">'.$parent['name'].'</option>';
 		}
 		echo '<select></li>';
+		echo '<div name="selectCities"></div>';
 		echo '<li>
             <label for="name">Название</label>
             <input name="name" type="text" step="any"  placeholder="Ленина" required />
@@ -228,6 +232,148 @@ switch ($action)	{
             <textarea name="comment"></textarea>
         </li>';
 		
+		echo '<button class="submit" type="submit" name="save">Добавить</button></li>';
+		echo '<ul></form>';
+	break;
+	case 4;
+	echo '<a href="add.php"><< Назад</a>';
+	if(isset($_POST['name']) && isset($_POST['city']) && isset($_POST['city']) &&  isset($_POST['country']) && isset($_POST['owner']) && isset($_POST['state']) && isset($_POST['save'])){
+		$query = "INSERT INTO account VALUE(NULL,4,'".$_POST['name']."','".$_POST['street']."','".$_POST['comment']."','".$_POST['owner']."','".$_POST['state']."')";
+		if($mysqli->query($query)){echo '<font color="green"><center>Дом <b>'.$_POST['name'].'</b> успешно добавлен.</center></font><br />'; 
+		if(isset($_POST['x']) && isset($_POST['y'])) {
+			$acc_id = $mysqli->insert_id;
+			$query2 = "INSERT INTO geopoint VALUE(".$acc_id.", ".$_POST['x'].", ".$_POST['y'].")";
+			if($mysqli->query($query2)){echo '<font color="green"><center>Координаты '.$_POST['x'].'x'.$_POST['y'].'</center></font><br />'; }
+		}
+		}
+		else echo '<font color="red"><center>Ошибка при добавлении дома <b>'.$_POST['name'].'</b>.</center></font><br />';
+	}
+	echo '<form class="contact_form" action="add.php?action='.$_GET['action'].'" method="post" name="contact_form">';
+		echo '<ul>
+        <li>
+             <h2>Добавление дома</h2>
+             <span class="required_notification">* Обязательное поле</span>
+        </li>';
+		echo '<li><label for="country">Страна</label>
+<select onchange="javascript:getCities();" id="country" name="country">';
+		echo '<option value="0">Не выбрано</option>';
+		$cities = $mysqli->query("SELECT * FROM account where type = 1");
+		while($parent = $cities->fetch_assoc()){
+			echo '<option value="'.$parent['account_id'].'">'.$parent['name'].'</option>';
+		}
+		echo '<select></li>';
+		echo '<div name="selectCities"></div><div name="selectStreets"></div>';
+		echo '<li>
+            <label for="name">Координаты</label>
+            <input size="7" name="x" type="number" step="any"  placeholder="20.01234" /> x <input size="7" name="y" type="number" step="any"  placeholder="20.01234" />
+        </li>';
+		echo '<li>
+            <label for="name">Название</label>
+            <input name="name" type="text" step="any"  placeholder="20" required />
+        </li>';
+		echo '<li>
+            <label for="name">Владелец</label>
+            <input name="owner" type="text" step="any"  placeholder="NOVOSIBIRSK" required />
+        </li>';
+		echo '<li>
+            <label for="name">Комментарий</label>
+            <textarea name="comment" required></textarea>
+        </li>';
+		echo '<li>
+            <label for="name">Статус установки</label>
+			<select class="form-control" name="state" width =60>
+			<option value="0">Снят с учета</option>
+			<option value="1">Принят к учету</option>
+			</select required>
+        </li>';
+		echo '<button class="submit" type="submit" name="save">Добавить</button></li>';
+		echo '<ul></form>';
+	break;
+	case 5;
+	echo '<a href="add.php"><< Назад</a>';
+	if(isset($_POST['name']) && isset($_POST['city']) && isset($_POST['city']) &&  isset($_POST['country']) && isset($_POST['owner']) && isset($_POST['state']) && isset($_POST['save'])){
+		$query = "INSERT INTO account VALUE(NULL,5,'".$_POST['name']."','".$_POST['home']."','".$_POST['comment']."','".$_POST['owner']."','".$_POST['state']."')";
+		if($mysqli->query($query)){echo '<font color="green"><center>Квартира <b>'.$_POST['name'].'</b> успешно добавлена.</center></font><br />'; }
+		else echo '<font color="red"><center>Ошибка при добавлении квартиры <b>'.$_POST['name'].'</b>.</center></font><br />';
+	}
+	echo '<form class="contact_form" action="add.php?action='.$_GET['action'].'" method="post" name="contact_form">';
+		echo '<ul>
+        <li>
+             <h2>Добавление квартиры</h2>
+             <span class="required_notification">* Обязательное поле</span>
+        </li>';
+		echo '<li><label for="country">Страна</label>
+<select onchange="javascript:getCities();" id="country" name="country">';
+		echo '<option value="0">Не выбрано</option>';
+		$cities = $mysqli->query("SELECT * FROM account where type = 1");
+		while($parent = $cities->fetch_assoc()){
+			echo '<option value="'.$parent['account_id'].'">'.$parent['name'].'</option>';
+		}
+		echo '<select></li>';
+		echo '<div name="selectCities"></div><div name="selectStreets"></div><div name="selectHomes"></div>';
+		echo '<li>
+            <label for="name">Название</label>
+            <input name="name" type="text" step="any"  placeholder="20" required />
+        </li>';
+		echo '<li>
+            <label for="name">Владелец</label>
+            <input name="owner" type="text" step="any"  placeholder="NOVOSIBIRSK" required />
+        </li>';
+		echo '<li>
+            <label for="name">Комментарий</label>
+            <textarea name="comment" required></textarea>
+        </li>';
+		echo '<li>
+            <label for="name">Статус установки</label>
+			<select class="form-control" name="state" width =60>
+			<option value="0">Снят с учета</option>
+			<option value="1">Принят к учету</option>
+			</select required>
+        </li>';
+		echo '<button class="submit" type="submit" name="save">Добавить</button></li>';
+		echo '<ul></form>';
+	break;
+	case 6;
+	echo '<a href="add.php"><< Назад</a>';
+	if(isset($_POST['name']) && isset($_POST['city']) && isset($_POST['city']) &&  isset($_POST['country']) && isset($_POST['owner']) && isset($_POST['state']) && isset($_POST['save'])){
+		$query = "INSERT INTO account VALUE(NULL,6,'".$_POST['name']."','".$_POST['home']."','".$_POST['comment']."','".$_POST['owner']."','".$_POST['state']."')";
+		if($mysqli->query($query)){echo '<font color="green"><center>Служебное помещение <b>'.$_POST['name'].'</b> успешно добавлено.</center></font><br />'; }
+		else echo '<font color="red"><center>Ошибка при добавлении служебного помещения <b>'.$_POST['name'].'</b>.</center></font><br />';
+	}
+	echo '<form class="contact_form" action="add.php?action='.$_GET['action'].'" method="post" name="contact_form">';
+		echo '<ul>
+        <li>
+             <h2>Добавление служебного помещения</h2>
+             <span class="required_notification">* Обязательное поле</span>
+        </li>';
+		echo '<li><label for="country">Страна</label>
+<select onchange="javascript:getCities();" id="country" name="country">';
+		echo '<option value="0">Не выбрано</option>';
+		$cities = $mysqli->query("SELECT * FROM account where type = 1");
+		while($parent = $cities->fetch_assoc()){
+			echo '<option value="'.$parent['account_id'].'">'.$parent['name'].'</option>';
+		}
+		echo '<select></li>';
+		echo '<div name="selectCities"></div><div name="selectStreets"></div><div name="selectHomes"></div>';
+		echo '<li>
+            <label for="name">Название</label>
+            <input name="name" type="text" step="any"  placeholder="20" required />
+        </li>';
+		echo '<li>
+            <label for="name">Владелец</label>
+            <input name="owner" type="text" step="any"  placeholder="NOVOSIBIRSK" required />
+        </li>';
+		echo '<li>
+            <label for="name">Комментарий</label>
+            <textarea name="comment" required></textarea>
+        </li>';
+		echo '<li>
+            <label for="name">Статус установки</label>
+			<select class="form-control" name="state" width =60>
+			<option value="0">Снят с учета</option>
+			<option value="1">Принят к учету</option>
+			</select required>
+        </li>';
 		echo '<button class="submit" type="submit" name="save">Добавить</button></li>';
 		echo '<ul></form>';
 	break;
@@ -248,7 +394,6 @@ switch ($action)	{
 	 
 	 
 
-<div class="pagin 897061acae4878988cdc752665e07dfede081a1e" id="pagin"><div class="pagination"><ul class="pagination"><li class="control"><a href="#" data-pagin="page" id="next">»</a></li></ul></div></div>
 
 <!-- totop -->
 <div class="col-md-1 col-md-offset-11 col-sm-2 col-sm-offset-10 col-xs-5 col-xs-offset-7">
@@ -263,7 +408,62 @@ switch ($action)	{
 
     
 <!-- Footer -->
+<script>
+			function getCities(){
+			$('div[name="selectStreets"]').html("");
+			$('div[name="selectCities"]').html("");
+				 var country_id = $('select[name="country"]').val();
+        if(!country_id){
+                $('div[name="selectCities"]').html('');
+                
+        }else{
+                $.ajax({
+                        type: "POST",
+                        url: "/ajax.php",
+                        data: { action: 'getCities', country_id: country_id },
+                        cache: false,
+                        success: function(responce){ $('div[name="selectCities"]').html(responce); }
+                });
+        };
+};		
 
+function getStreets(){
+	$('div[name="selectStreets"]').html("");
+				 var city_id = $('select[name="city"]').val();
+        if(!city_id){
+                $('div[name="selectStreets"]').html('');
+                
+        }else{
+                $.ajax({
+                        type: "POST",
+                        url: "/ajax.php",
+                        data: { action: 'getStreets', city_id: city_id },
+                        cache: false,
+                        success: function(responce){ $('div[name="selectStreets"]').html(responce); }
+                });
+        };
+};	
+
+function getHomes(){
+	$('div[name="selectHomes"]').html("");
+				 var street_id = $('select[name="street"]').val();
+        if(!street_id){
+                $('div[name="selectHomes"]').html('');
+                
+        }else{
+                $.ajax({
+                        type: "POST",
+                        url: "/ajax.php",
+                        data: { action: 'getHomes', street_id: street_id },
+                        cache: false,
+                        success: function(responce){ $('div[name="selectHomes"]').html(responce); }
+                });
+        };
+};			
+	
+		</script>
+ <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+		
 
 
 

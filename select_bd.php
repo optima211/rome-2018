@@ -189,33 +189,11 @@ $city = $mysqli->query("SELECT * FROM account where account_id = ".$_POST['city'
 $street = $mysqli->query("SELECT * FROM account where account_id = ".$_POST['street'])->fetch_assoc();
 $home = $mysqli->query("SELECT * FROM account where account_id = ".$_POST['home'])->fetch_assoc();
 $homegeo = $mysqli->query("SELECT * FROM geopoint where account_id = ".$_POST['home'])->fetch_assoc();
-echo $country['name'].', '.$city['name'].', '.$street['name'].', '.$home['name'].'<br />';
-
+$address = $country['name'].', '.$city['name'].', '.$street['name'].', '.$home['name'];
 $lat = $homegeo['lat']; $lng = $homegeo['lng']; $zoom = $_POST['zoom'];
-while($t = $mysqli->query("SELECT * FROM geopoint")->fetch_assoc()){
-$src = 'https://maps.googleapis.com/maps/api/staticmap?center='.$t['lat'].','.$t['lng'].'&markers=color:red%7Clabel:C%7C'.$t['lat'].','.$t['lng'].'&zoom=12&size=600x400&key='.$googleKey.'';
-file_put_contents('graphics/'.$t['account_id'].'.png',file_get_contents($src));
-}
-?>
- <link href="../css/google.css" rel="stylesheet" type="text/css">
- <div id="map"></div>
-    <script>
-      function initMap() {
-        var uluru = {lat: <? echo $lat; ?>, lng: <? echo $lng; ?>};
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: <? echo $zoom; ?>,
-          center: uluru
-        });
-        var marker = new google.maps.Marker({
-          position: uluru,
-          map: map
-        });
-      }
-    </script>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=<? echo $key; ?>&callback=initMap">
-    </script>	 
-<?
+
+echo $address;
+echo '<br /><img src="graphics/'.$homegeo['account_id'].'.png"/>';
 
 
 
