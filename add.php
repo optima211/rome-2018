@@ -15,7 +15,7 @@
     <link href="#" rel="shortcut icon" type="image/x-icon">
     <!-- Bootstrap Core CSS -->
     <link href="./css/bootstrap.min.css" rel="stylesheet">
-    
+	
     <!-- подключение CSS файла Fancybox -->
    <link rel="stylesheet" href="./css/jquery.fancybox.css" type="text/css" media="screen">
 
@@ -72,7 +72,11 @@ include_once('./lib/connect.php');
 <?
 $types = array(
 	1 => "Страна",
-	2 => "Город"
+	2 => "Город",
+	3 => "Улица",
+	4 => "Дом",
+	5 => "Квартира",
+	6 => "Служебное помещение"
 );
 ?>
 <div class="container">
@@ -188,8 +192,50 @@ switch ($action)	{
 		echo '<button class="submit" type="submit" name="save">Добавить</button></li>';
 		echo '<ul></form>';
 	break;
+	
+	
+	
+	case 3;
+	echo '<a href="add.php"><< Назад</a>';
+	if(isset($_POST['name']) && isset($_POST['owner']) && isset($_POST['save'])){
+		$query = "INSERT INTO account VALUE(NULL,3,'".$_POST['name']."','".$_POST['country']."','".$_POST['comment']."','".$_POST['owner']."',0)";
+		if($mysqli->query($query)){echo '<font color="green"><center>Улица <b>'.$_POST['name'].'</b> успешно добавлена.</center></font><br />'; }
+		else echo '<font color="red"><center>Ошибка при добавлении улицы <b>'.$_POST['name'].'</b>.</center></font><br />';
+	}
+	echo '<form class="contact_form" action="add.php?action='.$_GET['action'].'" method="post" name="contact_form">';
+		echo '<ul>
+        <li>
+             <h2>Добавление улицы</h2>
+			 
+        </li>';
+		echo '<li><label for="country">Город</label>
+<select name="country">';
+		$cities = $mysqli->query("SELECT * FROM account where type = 2");
+		while($parent = $cities->fetch_assoc()){
+			echo '<option value="'.$parent['account_id'].'">'.$parent['name'].'</option>';
+		}
+		echo '<select></li>';
+		echo '<li>
+            <label for="name">Название</label>
+            <input name="name" type="text" step="any"  placeholder="Ленина" required />
+        </li>';
+		echo '<li>
+            <label for="name">Владелец</label>
+            <input name="owner" type="text" step="any"  placeholder="NOVOSIBIRSK" required />
+        </li>';
+		echo '<li>
+            <label for="name">Комментарий</label>
+            <textarea name="comment"></textarea>
+        </li>';
+		
+		echo '<button class="submit" type="submit" name="save">Добавить</button></li>';
+		echo '<ul></form>';
+	break;
+	
 }
 ?>
+</br>
+</br>
 </br>
 	 
 	 
@@ -222,4 +268,5 @@ switch ($action)	{
 
 
 </body>
+<script src="https://code.jquery.com/jquery-1.12.3.min.js" />
 </html>

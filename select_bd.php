@@ -49,7 +49,7 @@
 <?
 
 include_once('./lib/connect.php');
-
+include ('../template/google_maps_api.php')
 
 
 ?>
@@ -73,7 +73,7 @@ include_once('./lib/connect.php');
       <div class="col-lg-11 col-lg-offset-1"> 
    
 <ul class="breadcrumb"><li><a href="#">Главная</a></li>
-<li class="active">заголовок 1</li></ul>
+<li class="active">просмотр</li></ul>
 </div>
 </div>
 </div>
@@ -82,55 +82,152 @@ include_once('./lib/connect.php');
  <div class="ms2_product">
     <div class="col-lg-12"> 
      
-<h2 class="upper">заголовок 2</h2>
+<h2 class="upper">Просмотр данных из базы</h2>
 
-
-
-
-
-
-	 <br>
-	 <hr>
-	 <br>
 	 
-<form class="contact_form" action="map.php" method="post" name="contact_form">
-    <ul>
-        <li>
-             <h2>мес1</h2>
-             <span class="required_notification">Все поля обязательны к заполнению</span>
-        </li>
-        <li>
-            <label for="lat">мес2:</label>
-            <input name="lat" type="number" step="any"  placeholder="0000" required />
-			<span class="form_hint">плитка</span>
-        </li>
-        <li>
-            <label for="lng">мес3:</label>
-            <input name="lng" type="number" step="any"  placeholder="0000" required />
-            <span class="form_hint">плитка</span>
-        </li>
-        <li>
-            <label for="zoom">мес4:</label>
-            <input type="number" min="1" name="zoom" placeholder="000000" required pattern="00000"/>
-            <span class="form_hint"> плитка</span>
-        </li>
-        <li>
-        	<button class="submit" type="submit" name="map">кнопка</button>
-        </li>
-    </ul>
-</form>
 
 </br>
-	 
-	 
-	 
+	<?php 
+	
+	switch($_GET['action']){
+	default:
+	 echo '<a href="select_db.php"><< Назад</a>';
+	echo $_POST['country'].'-'.$_POST['city'].'-'.$_POST['street'].'-'.$_POST['home'].'<br />';
+	echo '<form class="contact_form" action="select_bd.php?action=view" method="post" name="contact_form">';
+		echo '<ul>
+        <li>
+             <h2>Просмотр по адресу</h2>
+			 
+        </li>';
+		echo '<li><label for="country">Страна</label>
+		<select onchange="javascript:getCities();" id="country" name="country">';
+		echo '<option value="0">Не выбрано</option>';
+		$countries = $mysqli->query("SELECT * FROM account where type = 1");
+		while($parent = $countries->fetch_assoc()){
+			echo '<option value="'.$parent['account_id'].'">'.$parent['name'].'</option>';
+		}
+		echo '<select></li>';
+		
+		
+		
+		?>
+		<script>
+			function getCities(){
+			$('div[name="selectStreets"]').html("");
+			$('div[name="selectCities"]').html("");
+				 var country_id = $('select[name="country"]').val();
+        if(!country_id){
+                $('div[name="selectCities"]').html('');
+                
+        }else{
+                $.ajax({
+                        type: "POST",
+                        url: "/ajax.php",
+                        data: { action: 'getCities', country_id: country_id },
+                        cache: false,
+                        success: function(responce){ $('div[name="selectCities"]').html(responce); }
+                });
+        };
+};		
 
+function getStreets(){
+	$('div[name="selectStreets"]').html("");
+				 var city_id = $('select[name="city"]').val();
+        if(!city_id){
+                $('div[name="selectStreets"]').html('');
+                
+        }else{
+                $.ajax({
+                        type: "POST",
+                        url: "/ajax.php",
+                        data: { action: 'getStreets', city_id: city_id },
+                        cache: false,
+                        success: function(responce){ $('div[name="selectStreets"]').html(responce); }
+                });
+        };
+};	
+
+function getHomes(){
+	$('div[name="selectHomes"]').html("");
+				 var street_id = $('select[name="street"]').val();
+        if(!street_id){
+                $('div[name="selectHomes"]').html('');
+                
+        }else{
+                $.ajax({
+                        type: "POST",
+                        url: "/ajax.php",
+                        data: { action: 'getHomes', street_id: street_id },
+                        cache: false,
+                        success: function(responce){ $('div[name="selectHomes"]').html(responce); }
+                });
+        };
+};			
+	
+		</script>
+		
+	<?php
+	 
+		echo '<div name="selectCities"></div><div name="selectStreets"></div><div name="selectHomes"></div>';
+	?>
+	<li>
+            <label for="zoom">Масштаб:</label>
+            <input type="number" min="1" name="zoom" placeholder="14" required pattern="(http|https)://.+"/>
+            <span class="form_hint"> Чем больше число, тем более бриближено изображение карты</span>
+        </li>
+	<?
+		echo '<button class="submit" type="submit" name="save">Проверка</button></li>';
+		echo '<ul></form>';
+		break;
+	
+	 ?>
+
+<? 
+case 'view':
+$country = $mysqli->query("SELECT * FROM account where account_id = ".$_POST['country'])->fetch_assoc();
+$city = $mysqli->query("SELECT * FROM account where account_id = ".$_POST['city'])->fetch_assoc();
+$street = $mysqli->query("SELECT * FROM account where account_id = ".$_POST['street'])->fetch_assoc();
+$home = $mysqli->query("SELECT * FROM account where account_id = ".$_POST['home'])->fetch_assoc();
+$homegeo = $mysqli->query("SELECT * FROM geopoint where account_id = ".$_POST['home'])->fetch_assoc();
+echo $country['name'].', '.$city['name'].', '.$street['name'].', '.$home['name'].'<br />';
+
+$lat = $homegeo['lat']; $lng = $homegeo['lng']; $zoom = $_POST['zoom'];
+while($t = $mysqli->query("SELECT * FROM geopoint")->fetch_assoc()){
+$src = 'https://maps.googleapis.com/maps/api/staticmap?center='.$t['lat'].','.$t['lng'].'&markers=color:red%7Clabel:C%7C'.$t['lat'].','.$t['lng'].'&zoom=12&size=600x400&key='.$googleKey.'';
+file_put_contents('graphics/'.$t['account_id'].'.png',file_get_contents($src));
+}
+?>
+ <link href="../css/google.css" rel="stylesheet" type="text/css">
+ <div id="map"></div>
+    <script>
+      function initMap() {
+        var uluru = {lat: <? echo $lat; ?>, lng: <? echo $lng; ?>};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: <? echo $zoom; ?>,
+          center: uluru
+        });
+        var marker = new google.maps.Marker({
+          position: uluru,
+          map: map
+        });
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=<? echo $key; ?>&callback=initMap">
+    </script>	 
+<?
+
+
+
+
+
+break;
+
+
+	}	 
 	 
 	 
-	 
-	 
-	 
-	 
+ ?>
 
 <div class="pagin 897061acae4878988cdc752665e07dfede081a1e" id="pagin"><div class="pagination"><ul class="pagination"><li class="control"><a href="#" data-pagin="page" id="next">»</a></li></ul></div></div>
 
@@ -148,7 +245,7 @@ include_once('./lib/connect.php');
     
 <!-- Footer -->
 
-
+ <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 
 
 </body>

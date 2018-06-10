@@ -21,9 +21,11 @@ error_reporting(-1);
     <!-- Custom CSS -->
     <link href="./css/modern-business.css" rel="stylesheet">
 	<link href="./css/input.css" rel="stylesheet" type="text/css">
+	<link href="./css/table.css" rel="stylesheet" type="text/css">
 
     <!-- Custom Fonts -->
     <link href="./css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	
 	
     
     <link href="./css/css" rel="stylesheet" type="text/css">
@@ -104,15 +106,22 @@ include_once('./lib/connect.php');
     {
         # Тут пишете код, который нужно выполнить.
         # Пример:
-        echo 'Кнопка нажата!';
-		$results = $mysqli->query("SELECT account_id FROM account where type = 1");
-echo '<table border="1">';
+      //  echo 'Кнопка нажата!';
+		$results = $mysqli->query("SELECT * FROM geopoint where lat IS NULL");
+		if(isset($results)){
+			echo '<h4>обнаружены следующие ошибочные записи:</h4>';
+echo '<table border="1" class="table_price">';
+echo '<tr><th>номер</th><th></th></tr>';
 while($row = $results->fetch_assoc()) {
     echo '<tr>';
     echo '<td>'.$row["account_id"].'</td>';
+	echo '<td>'.$row["lat"].'</td>';
+	echo '<td><a>Select</a></td>';
     echo '</tr>';
 }
 echo '</table>';
+		}
+		else{echo "ошибочных записей не найдено";}
 // Frees the memory associated with a result
 $results->free();
 
@@ -122,7 +131,7 @@ $mysqli->close();
 ?>
 
 
-	 <br>
+
 	 <hr>
 	 <br>
 	 

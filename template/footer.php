@@ -21,27 +21,17 @@
                 <div class="col-lg-3 col-sm-3 col-xs-5">
                  <ul>
                     <li>
-                        <a href="#">
-                          <p>О нас</p>
-                        </a>
-                    </li>
-                    <li>
-                         <a href="#">
+                         <a href="http://www.zao-rim.ru/">
                              <p>Официальный сайт</p></a>
                     </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">просмотр<b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="map.php">по коорднитам</a>
-                            </li>
-                            <li>
-                                <a href="#">по адресу</a>
-                            </li>
-                            <li>
-                                <a href="select_bd.php">из базы</a>
-                            </li>
-                        </ul>
+					<li>
+                        <a href="map.php">
+                          <p>карта</p>
+                        </a>
+                    </li>
+					<li>
+                         <a href="view.php">
+                             <p>просмотр</p></a>
                     </li>
                 </ul>
               </div>

@@ -20,20 +20,8 @@
                     <li>
                         <a href="#"><h4>о нас</h4></a>
                     </li>
-
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><h4>просмотр<b class="caret"></b></h4></a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="map.php"><h4>по координатам</h4></a>
-                            </li>
-                            <li>
-                                <a href="#"><h4>по адресу</h4></a>
-                            </li>
-                            <li>
-                                <a href="select_bd.php"><h4>из базы</h4></a>
-                            </li>
-                        </ul>
+                    <li>
+                        <a href="select_bd.php"><h4>просмотр</h4></a>
                     </li>
                     <li>
                         <a href="add.php"><h4>добавить</h4></a>
@@ -44,7 +32,9 @@
                     <li>
                         <a href="migration.php"><h4>миграция</h4></a>
                     </li>
-                   
+                    <li>
+                        <a href="map.php"><h4>миграция</h4></a>
+                    </li>
                     <li>
                         <a href="http://www.zao-rim.ru/"><h4>официальный сайт</h4></a>
                     </li>

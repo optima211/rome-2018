@@ -71,30 +71,21 @@
                         <a href="#"><h4>о нас</h4></a>
                     </li>
 
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><h4>просмотр<b class="caret"></b></h4></a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="asort.php"><h4>по координатам</h4></a>
-                            </li>
-                            <li>
-                                <a href="#"><h4>по адресу</h4></a>
-                            </li>
-                            <li>
-                                <a href="#"><h4>из базы</h4></a>
-                            </li>
-                        </ul>
+                    <li>
+                        <a href="select_bd.php"><h4>просмотр</h4></a>
                     </li>
                     <li>
-                        <a href="#"><h4>добавить</h4></a>
+                        <a href="add.php"><h4>добавить</h4></a>
                     </li>
                    <li>
-                        <a href="#"><h4>изменить</h4></a>
+                        <a href="update.php"><h4>изменить</h4></a>
                     </li>
                     <li>
                         <a href="migration.php"><h4>миграция</h4></a>
                     </li>
-                   
+					<li>
+                        <a href="map.php"><h4>карта</h4></a>
+                    </li>
                     <li>
                         <a href="http://www.zao-rim.ru/"><h4>официальный сайт</h4></a>
                     </li>
@@ -151,10 +142,10 @@
         
 
         <!-- Controls -->
-        <a class="left carousel-control" href="#" data-slide="prev">
+        <a class="left carousel-control" href="http://rome/#myCarousel" data-slide="prev">
             <span class="icon-prev"></span>
         </a>
-        <a class="right carousel-control" href="#" data-slide="next">
+        <a class="right carousel-control" href="http://rome/#myCarousel" data-slide="next">
             <span class="icon-next"></span>
         </a>
     </header>
@@ -175,29 +166,20 @@
                     <li>
                         <a href="#"><img class="img-responsive img-circle img-thumbnail" src="./img/1menu-about.png" alt=""><h4>о нас</h4></a>
                     </li>
-                    
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img class="img-responsive img-circle img-thumbnail" src="./img/eye.png" alt=""><h4>просмотр<b class="caret"></b></h4></a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="asort.php"><h4>по координатам</h4></a>
-                            </li>
-                            <li>
-                                <a href="#"><h4>по адресу</h4></a>
-                            </li>
-                            <li>
-                                <a href="#"><h4>из базы</h4></a>
-                            </li>
-                        </ul>
+                    <li>
+                        <a href="select_bd.php"><img class="img-responsive img-circle img-thumbnail" src="./img/eye.png" alt=""><h4>просмотр</h4></a>
                     </li>
                     <li>
-                        <a href="#"><img class="img-responsive img-circle img-thumbnail" src="./img/plus.png" alt=""><h4>добавить</h4></a>
+                        <a href="add.php"><img class="img-responsive img-circle img-thumbnail" src="./img/plus.png" alt=""><h4>добавить</h4></a>
                     </li>
                     <li>
-                        <a href="#"><img class="img-responsive img-circle img-thumbnail" src="./img/transform.png" alt=""><h4>изменить</h4></a>
+                        <a href="update.php"><img class="img-responsive img-circle img-thumbnail" src="./img/transform.png" alt=""><h4>изменить</h4></a>
                     </li>
                      <li>
                         <a href="migration.php"><img class="img-responsive img-circle img-thumbnail" src="./img/migration.png" alt=""><h4>миграция</h4></a>
+                    </li>
+                    <li>
+                        <a href="map.php"><img class="img-responsive img-circle img-thumbnail" src="./img/map.png" alt=""><h4>карта</h4></a>
                     </li>
                     <li class="rotate-180">
                         <a href="http://www.zao-rim.ru/"><img class="img-responsive img-circle img-thumbnail" src="./img/1menu-frend.png" alt=""><h4>официальный сайт</h4></a>
@@ -264,7 +246,7 @@
                                     color: #627087;">ПОПРОБУЙТЕ НАШ ПРОДУКТ!</p>
                                     </div>
                         <div class="col-md-6 col-sm-6">
-                       <a href="http://zao-rim.ru/" class="btn btn-primary">купить счетчик</a>
+                       <a href="http://www.zao-rim.ru/" class="btn btn-primary">купить счетчик</a>
 </div>
 </div>
 </div>

@@ -124,17 +124,18 @@ include_once('./lib/connect.php');
         {
             $lat=$_POST['lat'];
             $lng=$_POST['lng'];
-		$zoom=$_POST['zoom'];}
-        ?>
-    <?php    echo '<h3>Введенные данные</h3>
+		$zoom=$_POST['zoom'];
+		echo '<h3>Введенные данные</h3>
         
  <table id="tborder" name="tborder" border="2px">
 <tr>     <td>Широта:</td> <td>'; echo $lat; echo'</td></tr>
 <tr>     <td>Долгота:</td> <td>'; echo $lng; echo'</td></tr>
 <tr>     <td>Масштаб:</td> <td>'; echo $zoom; echo'</td></tr>
  </table>';
+		
+		}
+        ?>
 
-?>
 </br>
   <link href="../css/google.css" rel="stylesheet" type="text/css">
  <div id="map"></div>
