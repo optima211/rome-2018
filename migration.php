@@ -22,6 +22,7 @@ error_reporting(-1);
     <link href="./css/modern-business.css" rel="stylesheet">
 	<link href="./css/input.css" rel="stylesheet" type="text/css">
 	<link href="./css/table.css" rel="stylesheet" type="text/css">
+	<link href="./css/link.css" rel="stylesheet" type="text/css">
 
     <!-- Custom Fonts -->
     <link href="./css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -92,6 +93,12 @@ include_once('./lib/connect.php');
 
 <form class="contact_form" action="migration.php" method="post" name="contact_form">
     <ul>
+	        <li>
+             <h2>Произвести миграцию адресов</h2>
+        </li>
+        <li>
+        <button class="submit" type="submit" name="search"><a href="./only/migration.php" target="_blank">Миграция</a></button>
+		</li>
         <li>
              <h2>Поиск ошибочных записей</h2>
         </li>

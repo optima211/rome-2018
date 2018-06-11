@@ -462,11 +462,11 @@ function getHomes(){
 };			
 	
 		</script>
- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+ <script src="./js/jquery.min.js"></script>
 		
 
 
 
 </body>
-<script src="https://code.jquery.com/jquery-1.12.3.min.js" />
+<script src="./js/jquery-1.12.3.min.js" />
 </html>
