@@ -83,7 +83,7 @@ include_once('./lib/connect.php');
  <div class="ms2_product">
     <div class="col-lg-12"> 
      
-<h2 class="upper">Просмотр по коордниатам</h2>
+<h2 class="upper">Просмотр по координатам</h2>
 
 
 
@@ -97,7 +97,7 @@ include_once('./lib/connect.php');
 <form class="contact_form" action="map.php" method="post" name="contact_form">
     <ul>
         <li>
-             <h2>Просмотр по коордниатам</h2>
+             <h2>Просмотр по координатам</h2>
              <span class="required_notification">Все поля обязательны к заполнению</span>
         </li>
         <li>
