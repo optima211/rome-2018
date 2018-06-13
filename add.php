@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-    
+
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
@@ -15,7 +15,7 @@
     <link href="#" rel="shortcut icon" type="image/x-icon">
     <!-- Bootstrap Core CSS -->
     <link href="./css/bootstrap.min.css" rel="stylesheet">
-	
+
     <!-- подключение CSS файла Fancybox -->
    <link rel="stylesheet" href="./css/jquery.fancybox.css" type="text/css" media="screen">
 
@@ -25,14 +25,14 @@
 
     <!-- Custom Fonts -->
     <link href="./css/font-awesome.min.css" rel="stylesheet" type="text/css">
-	
-    
+
+
     <link href="./css/css" rel="stylesheet" type="text/css">
     <link href="./css/css(1)" rel="stylesheet">
     <link href="./css/css(2)" rel="stylesheet">
-	
+
 			<!-- !!!!!!!<link rel="stylesheet" type="text/css" href="./css/modal-contact-form.css" /> -->
-   
+
 <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script type="text/javascript">jQuery.noConflict();</script>
 <script src="/templates/<?php// echo $this->template ?>/facebox/facebox.js"></script>
@@ -60,14 +60,14 @@ include_once('./lib/connect.php');
 ?>
 
 
-    
+
 
 <body>
 
 <!-- Navigation -->
 
  <?php   include ("template/header.php");?>
- <br><br><br><br> 
+ <br><br><br><br>
 <!-- Button trigger modal -->
 <?
 $types = array(
@@ -81,9 +81,9 @@ $types = array(
 ?>
 <div class="container">
    <div class="row">
-      
-      <div class="col-lg-11 col-lg-offset-1"> 
-   
+
+      <div class="col-lg-11 col-lg-offset-1">
+
 <ul class="breadcrumb"><li><a href="#">Главная</a></li>
 <li class="active">Добавление</li></ul>
 </div>
@@ -92,8 +92,8 @@ $types = array(
 
 <div class="container">
  <div class="ms2_product">
-    <div class="col-lg-12"> 
-     
+    <div class="col-lg-12">
+
 <h2 class="upper">Добавление информации в базу</h2>
 
 
@@ -113,7 +113,7 @@ switch ($action)	{
 		echo '<ul>
         <li>
              <h2>Что добавить?</h2>
-			 
+
         </li>
         <li>';
 		echo '<select name="action">';
@@ -122,7 +122,7 @@ switch ($action)	{
 			echo '<option value="'.($i+1).'">'.$type.'</option>';
 			$i++;
 		}
-		
+
 		echo '</select></li>';
 		echo '<li><button class="submit" type="submit" name="add">Добавить</button></li>';
 		echo '<ul></form>';
@@ -139,7 +139,7 @@ switch ($action)	{
         <li>
              <h2>Добавление страны</h2>
              <span class="required_notification">* Обязательное поле</span>
-			 
+
         </li>';
 		echo '<li>
             <label for="name">Название</label>
@@ -153,7 +153,7 @@ switch ($action)	{
             <label for="name">Комментарий</label>
             <textarea name="comment"></textarea>
         </li>';
-		
+
 		echo '<button class="submit" type="submit" name="save">Добавить</button></li>';
 		echo '<ul></form>';
 	break;
@@ -169,7 +169,7 @@ switch ($action)	{
         <li>
              <h2>Добавление города</h2>
              <span class="required_notification">* Обязательное поле</span>
-			 
+
         </li>';
 		echo '<li><label for="country">Страна</label>
 <select name="country">';
@@ -190,13 +190,13 @@ switch ($action)	{
             <label for="name">Комментарий</label>
             <textarea name="comment"></textarea>
         </li>';
-		
+
 		echo '<button class="submit" type="submit" name="save">Добавить</button></li>';
 		echo '<ul></form>';
 	break;
-	
-	
-	
+
+
+
 	case 3;
 	echo '<a href="add.php"><< Назад</a>';
 	if(isset($_POST['name']) && isset($_POST['owner']) && isset($_POST['save'])){
@@ -231,7 +231,7 @@ switch ($action)	{
             <label for="name">Комментарий</label>
             <textarea name="comment"></textarea>
         </li>';
-		
+
 		echo '<button class="submit" type="submit" name="save">Добавить</button></li>';
 		echo '<ul></form>';
 	break;
@@ -239,7 +239,7 @@ switch ($action)	{
 	echo '<a href="add.php"><< Назад</a>';
 	if(isset($_POST['name']) && isset($_POST['city']) && isset($_POST['city']) &&  isset($_POST['country']) && isset($_POST['owner']) && isset($_POST['state']) && isset($_POST['save'])){
 		$query = "INSERT INTO account VALUE(NULL,4,'".$_POST['name']."','".$_POST['street']."','".$_POST['comment']."','".$_POST['owner']."','".$_POST['state']."')";
-		if($mysqli->query($query)){echo '<font color="green"><center>Дом <b>'.$_POST['name'].'</b> успешно добавлен.</center></font><br />'; 
+		if($mysqli->query($query)){echo '<font color="green"><center>Дом <b>'.$_POST['name'].'</b> успешно добавлен.</center></font><br />';
 		if(isset($_POST['x']) && isset($_POST['y'])) {
 			$acc_id = $mysqli->insert_id;
 			$query2 = "INSERT INTO geopoint VALUE(".$acc_id.", ".$_POST['x'].", ".$_POST['y'].")";
@@ -377,22 +377,22 @@ switch ($action)	{
 		echo '<button class="submit" type="submit" name="save">Добавить</button></li>';
 		echo '<ul></form>';
 	break;
-	
+
 }
 ?>
 </br>
 </br>
 </br>
-	 
-	 
-	 
 
-	 
-	 
-	 
-	 
-	 
-	 
+
+
+
+
+
+
+
+
+
 
 
 <!-- totop -->
@@ -401,12 +401,12 @@ switch ($action)	{
 </div>
 </div>
 </div>
-</div> 
+</div>
  <!-- jQuery -->
    <script src="./js/users.js"></script>
  <?php   include ("template/footer.php");?>
 
-    
+
 <!-- Footer -->
 <script>
 			function getCities(){
@@ -415,7 +415,7 @@ switch ($action)	{
 				 var country_id = $('select[name="country"]').val();
         if(!country_id){
                 $('div[name="selectCities"]').html('');
-                
+
         }else{
                 $.ajax({
                         type: "POST",
@@ -425,14 +425,14 @@ switch ($action)	{
                         success: function(responce){ $('div[name="selectCities"]').html(responce); }
                 });
         };
-};		
+};
 
 function getStreets(){
 	$('div[name="selectStreets"]').html("");
 				 var city_id = $('select[name="city"]').val();
         if(!city_id){
                 $('div[name="selectStreets"]').html('');
-                
+
         }else{
                 $.ajax({
                         type: "POST",
@@ -442,14 +442,14 @@ function getStreets(){
                         success: function(responce){ $('div[name="selectStreets"]').html(responce); }
                 });
         };
-};	
+};
 
 function getHomes(){
 	$('div[name="selectHomes"]').html("");
 				 var street_id = $('select[name="street"]').val();
         if(!street_id){
                 $('div[name="selectHomes"]').html('');
-                
+
         }else{
                 $.ajax({
                         type: "POST",
@@ -459,14 +459,13 @@ function getHomes(){
                         success: function(responce){ $('div[name="selectHomes"]').html(responce); }
                 });
         };
-};			
-	
+};
+
 		</script>
- <script src="./js/jquery.min.js"></script>
 		
 
 
 
 </body>
-<script src="./js/jquery-1.12.3.min.js" />
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 </html>

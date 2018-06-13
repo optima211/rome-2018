@@ -15,14 +15,17 @@ $result = $mysqli->query("SELECT * FROM account WHERE type = 4 LIMIT 999999");
  $actor = $result->fetch_assoc();
 
  echo "<ul>\n";
+ $i = 0;
  while ($actor = $result->fetch_assoc()) {
+   $homegeo = $mysqli->query("SELECT * FROM geopoint where account_id = ".$actor['account_id'])->fetch_assoc();
+   if($homegeo['account_id'] < 0){
    $sql1 = "SELECT * FROM account WHERE  account_id = ".$actor['parrent'];  //Выбор улицы
   $result1 = $mysqli->query($sql1);
   $actor1 = $result1->fetch_assoc();
-    $sql1 = "SELECT * FROM account WHERE  account_id = ".$actor1['parrent'];  //выбор города
+  $sql1 = "SELECT * FROM account WHERE  account_id = ".$actor1['parrent'];  //выбор города
   $result2 = $mysqli->query($sql1);
   $actor2 = $result2->fetch_assoc();
-      $sql1 = "SELECT * FROM account WHERE  account_id = ".$actor2['parrent'];  //выбор страны
+  $sql1 = "SELECT * FROM account WHERE  account_id = ".$actor2['parrent'];  //выбор страны
   $result3 = $mysqli->query($sql1);
   $actor3 = $result3->fetch_assoc();
   $name = $actor3['name'].' '.$actor2['name'].' '.$actor1['name'].' '.$actor['name'].'';
@@ -36,8 +39,10 @@ $result = $mysqli->query("SELECT * FROM account WHERE type = 4 LIMIT 999999");
 
   $mapData = map_google_search_result($geoData); //прием координат
 
-  $query = "INSERT INTO geopoint VALUES ('".$actor['account_id']."', '".$mapData['lat']."', '".$mapData['lng']."')";
-$mysqli->query($query);	
+    $query = "INSERT INTO geopoint VALUES ('".$actor['account_id']."', '".$mapData['lat']."', '".$mapData['lng']."')";
+    $mysqli->query($query);
+    $i++;
+  }
  }
  echo "</ul>\n";
 
@@ -45,5 +50,5 @@ $mysqli->query($query);
 
 
 $mysqli->close();
-echo '<h1>finish procedure</h1>'; 
+echo '<h1>Процедура завершена!<br /> Результат: '.$i.' новых координат.</h1>';
 ?>
