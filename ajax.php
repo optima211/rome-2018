@@ -28,7 +28,7 @@ switch($_POST['action']){
 	echo '<li><label for="street">Улица</label>
 		<select onchange="javascript:getHomes();" id="street" name="street">';
 
-		$query = $mysqli->query("SELECT * FROM account where type = 3 and parrent = ".$_POST['city_id']." ORDER BY name ");
+		$query = $mysqli->query("SELECT * FROM account where type = 3 and parrent = ".$_POST['city_id']." ORDER BY name ASC");
 		$count = $query->num_rows;
 		if($count == 0){
 				echo '<option value="0">Улицы не найдены</option>';

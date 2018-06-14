@@ -73,7 +73,7 @@ include_once('./lib/connect.php');
       
       <div class="col-lg-11 col-lg-offset-1"> 
    
-<ul class="breadcrumb"><li><a href="#">Главная</a></li>
+<ul class="breadcrumb"><li><a href="index.php">Главная</a></li>
 <li class="active">Просмотр</li></ul>
 </div>
 </div>

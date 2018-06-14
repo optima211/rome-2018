@@ -18,7 +18,6 @@
     <!-- Custom CSS -->
     <link href="./css/modern-business.css" rel="stylesheet">
 	<link href="./css/input.css" rel="stylesheet" type="text/css">
-	<link href="./css/google.css" rel="stylesheet" type="text/css">
 
     <!-- Custom Fonts -->
     <link href="./css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -73,7 +72,7 @@ include ('../template/google_maps_api.php')
       
       <div class="col-lg-11 col-lg-offset-1"> 
    
-<ul class="breadcrumb"><li><a href="index.php">Главная</a></li>
+<ul class="breadcrumb"><li><a href="#">Главная</a></li>
 <li class="active">просмотр</li></ul>
 </div>
 </div>
@@ -92,7 +91,7 @@ include ('../template/google_maps_api.php')
 	
 	switch($_GET['action']){
 	default:
-	 echo '<a href="select_db.php"><< Назад</a>';
+	 echo '<a href="select_bd.php"><< Назад</a>';
 	echo $_POST['country'].'-'.$_POST['city'].'-'.$_POST['street'].'-'.$_POST['home'].'<br />';
 	echo '<form class="contact_form" action="select_bd.php?action=view" method="post" name="contact_form">';
 		echo '<ul>
@@ -171,11 +170,11 @@ function getHomes(){
 	 
 		echo '<div name="selectCities"></div><div name="selectStreets"></div><div name="selectHomes"></div>';
 	?>
-<!---	<li>
+	<li>
             <label for="zoom">Масштаб:</label>
-            <input type="number" min="1" name="zoom" placeholder="14"  pattern="(http|https)://.+"/>
+            <input type="number" min="1" name="zoom" placeholder="14" required pattern="(http|https)://.+"/>
             <span class="form_hint"> Чем больше число, тем более бриближено изображение карты</span>
-        </li>--->
+        </li>
 	<?
 		echo '<button class="submit" type="submit" name="save">Проверка</button></li>';
 		echo '<ul></form>';
@@ -190,18 +189,21 @@ $city = $mysqli->query("SELECT * FROM account where account_id = ".$_POST['city'
 $street = $mysqli->query("SELECT * FROM account where account_id = ".$_POST['street'])->fetch_assoc();
 $home = $mysqli->query("SELECT * FROM account where account_id = ".$_POST['home'])->fetch_assoc();
 $homegeo = $mysqli->query("SELECT * FROM geopoint where account_id = ".$_POST['home'])->fetch_assoc();
-$address = $country['name'].', '.$city['name'].', '.$street['name'].', '.$home['name'];
-$lat = $homegeo['lat']; $lng = $homegeo['lng']; $zoom = $_POST['zoom'];
+echo $country['name'].', '.$city['name'].', '.$street['name'].', '.$home['name'].'<br />';
 
-echo $address; 
-echo '
-    <h3>Интерактивная карта Google Maps</h3>
-    <div id="map"></div>';?>
+$lat = $homegeo['lat']; $lng = $homegeo['lng']; $zoom = $_POST['zoom'];
+while($t = $mysqli->query("SELECT * FROM geopoint")->fetch_assoc()){
+$src = 'https://maps.googleapis.com/maps/api/staticmap?center='.$t['lat'].','.$t['lng'].'&markers=color:red%7Clabel:C%7C'.$t['lat'].','.$t['lng'].'&zoom=12&size=600x400&key='.$googleKey.'';
+file_put_contents('graphics/'.$t['account_id'].'.png',file_get_contents($src));
+}
+?>
+ <link href="../css/google.css" rel="stylesheet" type="text/css">
+ <div id="map"></div>
     <script>
       function initMap() {
-        var uluru = {lat: <?php echo $lat; ?>, lng: <?echo $lng ;?>};
+        var uluru = {lat: <? echo $lat; ?>, lng: <? echo $lng; ?>};
         var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 15,
+          zoom: <? echo $zoom; ?>,
           center: uluru
         });
         var marker = new google.maps.Marker({
@@ -211,14 +213,9 @@ echo '
       }
     </script>
     <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAENKGpbOI9KaivcTR-MSobwnq9Fh83VDc&callback=initMap">
-    </script>
-<?php
-
-
-
-echo "</br></br></br></br><h4>Сохраненное изображение (может быть недоступно)</h4></br></br>";
-echo '<br /><img src="graphics/'.$homegeo['account_id'].'.png"/>';
+    src="https://maps.googleapis.com/maps/api/js?key=<? echo $key; ?>&callback=initMap">
+    </script>	 
+<?
 
 
 
@@ -248,7 +245,7 @@ break;
     
 <!-- Footer -->
 
- <script src="./js/jquery.min.js"></script>
+ <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 
 
 </body>

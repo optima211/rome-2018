@@ -30,7 +30,7 @@
                         </a>
                     </li>
 					<li>
-                         <a href="view.php">
+                         <a href="select_bd.php">
                              <p>просмотр</p></a>
                     </li>
                 </ul>

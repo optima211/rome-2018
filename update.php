@@ -89,7 +89,7 @@ $types = array(
 
       <div class="col-lg-11 col-lg-offset-1">
 
-<ul class="breadcrumb"><li><a href="#">Главная</a></li>
+<ul class="breadcrumb"><li><a href="index.php">Главная</a></li>
 <li class="active">Обновление</li></ul>
 </div>
 </div>
