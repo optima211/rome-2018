@@ -92,7 +92,7 @@ include ('../template/google_maps_api.php')
 	
 	switch($_GET['action']){
 	default:
-	 echo '<a href="select_db.php"><< Назад</a>';
+	 echo '<a href="select_bd.php"><< Назад</a>';
 	echo $_POST['country'].'-'.$_POST['city'].'-'.$_POST['street'].'-'.$_POST['home'].'<br />';
 	echo '<form class="contact_form" action="select_bd.php?action=view" method="post" name="contact_form">';
 		echo '<ul>

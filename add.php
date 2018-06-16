@@ -1,5 +1,6 @@
 <? 	if(isset($_POST['action'])){
 		header('Location: /add.php?action='.$_POST['action']);
+		error_reporting (-1);
 	}
 	?>
 <!DOCTYPE html>
@@ -129,10 +130,20 @@ switch ($action)	{
 	break;
 	case 1;
 	echo '<a href="add.php"><< Назад</a>';
-	if(isset($_POST['name']) && isset($_POST['owner']) && isset($_POST['save'])){
+	if(isset($_POST['name']) && isset($_POST['save'])){
+		$results = $mysqli->query("SELECT COUNT(*) AS n FROM account where (name = '".$_POST['name']."' AND type= 1)");
+		$row = $results->fetch_assoc();
+		echo $row["n"];
+		if ($row["n"] == 0)
+		{
 		$query = "INSERT INTO account VALUE(NULL,1,'".$_POST['name']."',0,'".$_POST['comment']."','".$_POST['owner']."',0)";
 		if($mysqli->query($query)){echo '<font color="green"><center>Страна <b>'.$_POST['name'].'</b> успешно добавлена</center></font><br />'; }
 		else echo '<font color="red"><center>Ошибка при добавлении страны <b>'.$_POST['name'].'</b>.</center></font><br />';
+		}
+		else
+		{
+			echo '<h3>Введите другое значение</h3>';
+		}
 	}
 	echo '<form class="contact_form" action="add.php?action='.$_GET['action'].'" method="post" name="contact_form">';
 		echo '<ul>
@@ -143,11 +154,11 @@ switch ($action)	{
         </li>';
 		echo '<li>
             <label for="name">Название</label>
-            <input name="name" type="text" step="any"  placeholder="Россия" required />
+            <input name="name" type="text" step="any" placeholder="Россия" required />
         </li>';
 		echo '<li>
             <label for="name">Владелец</label>
-            <input name="owner" type="text" step="any"  placeholder="NOVOSIBIRSK" required />
+            <input name="owner" type="text" step="any"  placeholder="NOVOSIBIRSK" />
         </li>';
 		echo '<li>
             <label for="name">Комментарий</label>
@@ -160,10 +171,21 @@ switch ($action)	{
 	case 2;
 	echo '<a href="add.php"><< Назад</a>';
 	if(isset($_POST['name']) && isset($_POST['owner']) && isset($_POST['save'])){
+		$results = $mysqli->query("SELECT COUNT(*) FROM account where (name = '".$_POST['name']."' AND type= 2 AND owner = '".$_POST['country']."')");
+		if ($results == 0)
+		{
 		$query = "INSERT INTO account VALUE(NULL,2,'".$_POST['name']."','".$_POST['country']."','".$_POST['comment']."','".$_POST['owner']."',0)";
 		if($mysqli->query($query)){echo '<font color="green"><center>Город <b>'.$_POST['name'].'</b> успешно добавлен.</center></font><br />'; }
 		else echo '<font color="red"><center>Ошибка при добавлении города <b>'.$_POST['name'].'</b>.</center></font><br />';
+		}
+		else
+		{
+		echo '<h3>Введите другое значение</h3>';
+		}	
 	}
+	
+	
+	
 	echo '<form class="contact_form" action="add.php?action='.$_GET['action'].'" method="post" name="contact_form">';
 		echo '<ul>
         <li>
@@ -200,10 +222,18 @@ switch ($action)	{
 	case 3;
 	echo '<a href="add.php"><< Назад</a>';
 	if(isset($_POST['name']) && isset($_POST['owner']) && isset($_POST['save'])){
+		$results = $mysqli->query("SELECT COUNT(*) FROM account where (name = '".$_POST['name']."' AND type= 3 AND owner = '".$_POST['city']."')");
+		if ($results == 0)
+		{
 		$query = "INSERT INTO account VALUE(NULL,3,'".$_POST['name']."','".$_POST['city']."','".$_POST['comment']."','".$_POST['owner']."',0)";
 		if($mysqli->query($query)){echo '<font color="green"><center>Улица <b>'.$_POST['name'].'</b> успешно добавлена.</center></font><br />'; }
 		else echo '<font color="red"><center>Ошибка при добавлении улицы <b>'.$_POST['name'].'</b>.</center></font><br />';
-	}
+		}
+		else
+		{
+		echo '<h3>Введите другое значение</h3>';
+		}			
+		}
 	echo '<form class="contact_form" action="add.php?action='.$_GET['action'].'" method="post" name="contact_form">';
 		echo '<ul>
         <li>
@@ -238,15 +268,26 @@ switch ($action)	{
 	case 4;
 	echo '<a href="add.php"><< Назад</a>';
 	if(isset($_POST['name']) && isset($_POST['city']) && isset($_POST['city']) &&  isset($_POST['country']) && isset($_POST['owner']) && isset($_POST['state']) && isset($_POST['save'])){
+		$results = $mysqli->query("SELECT COUNT(*) FROM account where (name = '".$_POST['name']."' AND type= 3 AND owner = '".$_POST['street']."')");
+		if ($results == 0)
+		{
 		$query = "INSERT INTO account VALUE(NULL,4,'".$_POST['name']."','".$_POST['street']."','".$_POST['comment']."','".$_POST['owner']."','".$_POST['state']."')";
 		if($mysqli->query($query)){echo '<font color="green"><center>Дом <b>'.$_POST['name'].'</b> успешно добавлен.</center></font><br />';
 		if(isset($_POST['x']) && isset($_POST['y'])) {
-			$acc_id = $mysqli->insert_id;
-			$query2 = "INSERT INTO geopoint VALUE(".$acc_id.", ".$_POST['x'].", ".$_POST['y'].")";
-			if($mysqli->query($query2)){echo '<font color="green"><center>Координаты '.$_POST['x'].'x'.$_POST['y'].'</center></font><br />'; }
+		$acc_id = $mysqli->insert_id;
+		$query2 = "INSERT INTO geopoint VALUE(".$acc_id.", ".$_POST['x'].", ".$_POST['y'].")";
+		if($mysqli->query($query2)){echo '<font color="green"><center>Координаты '.$_POST['x'].'x'.$_POST['y'].'</center></font><br />'; }
 		}
 		}
 		else echo '<font color="red"><center>Ошибка при добавлении дома <b>'.$_POST['name'].'</b>.</center></font><br />';
+		}
+		else
+		{
+		echo '<h3>Введите другое значение</h3>';
+		}			
+		
+		
+		
 	}
 	echo '<form class="contact_form" action="add.php?action='.$_GET['action'].'" method="post" name="contact_form">';
 		echo '<ul>
@@ -292,9 +333,17 @@ switch ($action)	{
 	case 5;
 	echo '<a href="add.php"><< Назад</a>';
 	if(isset($_POST['name']) && isset($_POST['city']) && isset($_POST['city']) &&  isset($_POST['country']) && isset($_POST['owner']) && isset($_POST['state']) && isset($_POST['save'])){
+		$results = $mysqli->query("SELECT COUNT(*) FROM account where (name = '".$_POST['name']."' AND type= 3 AND owner = '".$_POST['home']."')");
+		if ($results == 0)
+		{
 		$query = "INSERT INTO account VALUE(NULL,5,'".$_POST['name']."','".$_POST['home']."','".$_POST['comment']."','".$_POST['owner']."','".$_POST['state']."')";
 		if($mysqli->query($query)){echo '<font color="green"><center>Квартира <b>'.$_POST['name'].'</b> успешно добавлена.</center></font><br />'; }
 		else echo '<font color="red"><center>Ошибка при добавлении квартиры <b>'.$_POST['name'].'</b>.</center></font><br />';
+		}
+		else
+		{
+		echo '<h3>Введите другое значение</h3>';
+		}	
 	}
 	echo '<form class="contact_form" action="add.php?action='.$_GET['action'].'" method="post" name="contact_form">';
 		echo '<ul>
@@ -336,9 +385,18 @@ switch ($action)	{
 	case 6;
 	echo '<a href="add.php"><< Назад</a>';
 	if(isset($_POST['name']) && isset($_POST['city']) && isset($_POST['city']) &&  isset($_POST['country']) && isset($_POST['owner']) && isset($_POST['state']) && isset($_POST['save'])){
+
+		$results = $mysqli->query("SELECT COUNT(*) FROM account where (name = '".$_POST['name']."' AND type= 3 AND owner = '".$_POST['home']."')");
+		if ($results == 0)
+		{
 		$query = "INSERT INTO account VALUE(NULL,6,'".$_POST['name']."','".$_POST['home']."','".$_POST['comment']."','".$_POST['owner']."','".$_POST['state']."')";
 		if($mysqli->query($query)){echo '<font color="green"><center>Служебное помещение <b>'.$_POST['name'].'</b> успешно добавлено.</center></font><br />'; }
 		else echo '<font color="red"><center>Ошибка при добавлении служебного помещения <b>'.$_POST['name'].'</b>.</center></font><br />';
+		}
+		else
+		{
+		echo '<h3>Введите другое значение</h3>';
+		}	
 	}
 	echo '<form class="contact_form" action="add.php?action='.$_GET['action'].'" method="post" name="contact_form">';
 		echo '<ul>

@@ -99,12 +99,12 @@ include_once('./lib/connect.php');
         <li>
         <button class="submit" type="submit" name="search"><a href="./only/migration.php" target="_blank">Миграция</a></button>
 		</li>
-        <li>
-             <h2>Поиск ошибочных записей</h2>
+<!---          <li>
+           <h2>Поиск ошибочных записей</h2>
         </li>
         <li>
         	<button class="submit" type="submit" name="search">Найти ошибочные записи</button>
-        </li>
+        </li> --->
     </ul>
 </form>
 <?php
